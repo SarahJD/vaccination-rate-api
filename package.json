@@ -17,6 +17,11 @@
   },
   "homepage": "https://github.com/SarahJD/vaccination-rate-api#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "convert-excel-to-json": "^1.2.0",
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "morgan": "^1.10.0",
+    "node-fetch": "^2.6.1",
+    "path": "^0.12.7"
   }
 }
