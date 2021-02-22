@@ -11,8 +11,6 @@ const app = express();
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 app.use(morgan('common', { stream: accessLogStream }));
 
-app.use(express.static('public'));
-
 // // for error handling
 // app.use((err, req, res, next) => {
 //   console.error(err.stack);
