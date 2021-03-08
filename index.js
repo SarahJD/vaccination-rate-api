@@ -16,6 +16,8 @@ const url = 'https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/
 const rkiFile = `./rki-data.xlsx`;
 const re = /Gesamt/;
 
+console.log('started');
+
 async function download() {
   const response = await fetch(url);
   const buffer = await response.buffer();
