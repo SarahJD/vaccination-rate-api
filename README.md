@@ -10,6 +10,6 @@ The REST API was built with Node.js and Express.
 
 ## How to Use
 
-The API is hosted ....
+The API is hosted: https://vaccination-covid-19-germany.herokuapp.com/.
 
 The defined endpoint for the data is /vaccinations.
