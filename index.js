@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express'),
 morgan = require('morgan'), // logging middleware
 fs = require('fs'),
@@ -20,15 +21,14 @@ let Germany;
 
 console.log('started');
 
-async function download() {
-  const response = await fetch(url);
-  const buffer = await response.buffer();
-  fs.writeFile(rkiFile, buffer, () => 
-    convertToJson()
-    );
-  }
-
-download();
+function download() {
+    fetch(url)
+    .then(res => {
+      const dest = fs.createWriteStream(rkiFile);
+      res.body.pipe(dest);
+    });
+  convertToJson();
+}
 
 // Convert xlsx-file to JSON
 function convertToJson() {
@@ -314,9 +314,10 @@ function createJsonObject () {
 }
 }
 
-app.get('/vaccinations', (req, res) => {
-      res.status(200).json(Germany);
-    })
+ app.get('/vaccinations', (req, res) => {
+   download();
+   res.status(200).json(Germany);
+});
 
 const PORT = process.env.PORT || 4000;
 
