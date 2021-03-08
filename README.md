@@ -10,6 +10,6 @@ The REST API was built with Node.js and Express.
 
 ## How to Use
 
-The API is hosted under: https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Impfquotenmonitoring.xlsx
+The API is hosted ....
 
 The defined endpoint for the data is /vaccinations.
