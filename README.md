@@ -1,46 +1,14 @@
-Vaccination-Rate API
-Here goes your awesome project description!
+# Vaccination Data API
 
-Table of contents
-General info
-Screenshots
-Technologies
-Setup
-Features
-Status
-Inspiration
-Contact
-General info
-Add more general information about project. What the purpose of the project is? Motivation?
+The data was fetched from the Robert Koch Institute (RKI). It offers a table with reported vaccinations nationwide and by federal state as well as by STIKO indication as an excel-file (https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Impfquotenmonitoring.xlsx).
+For the API the excel data was converted to a JSON object providing data for all federal states and in total.
 
-Screenshots
-Example screenshot
+## Technologies
 
-Technologies
-Tech 1 - version 1.0
-Tech 2 - version 2.0
-Tech 3 - version 3.0
-Setup
-Describe how to install / setup your local environement / add link to demo version.
+The REST API was built with Node.js and Express.
 
-Code Examples
-Show examples of usage: put-your-code-here
+## How to Use
 
-Features
-List of features ready and TODOs for future development
+The API is hosted under: https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Impfquotenmonitoring.xlsx
 
-Awesome feature 1
-Awesome feature 2
-Awesome feature 3
-To-do list:
-
-Wow improvement to be done 1
-Wow improvement to be done 2
-Status
-Project is: in progress, finished, no longer continue and why?
-
-Inspiration
-Add here credits. Project inspired by..., based on...
-
-Contact
-Created by @flynerdpl - feel free to contact me!
+The defined endpoint for the data is /vaccinations.
