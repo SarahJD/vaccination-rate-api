@@ -309,8 +309,8 @@ app.get('/vaccinations', (req, res) => {
       res.status(200).json(Germany);
     })
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server is listening at port: ${PORT}`);
 });
