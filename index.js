@@ -14,7 +14,9 @@ app.use(morgan('common', { stream: accessLogStream }));
 // Fetch xlsx-file from rki.de
 const url = 'https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Impfquotenmonitoring.xlsx?__blob=publicationFile';
 const rkiFile = `./rki-data.xlsx`;
+let result;
 const re = /Gesamt/;
+let Germany;
 
 console.log('started');
 
@@ -22,28 +24,32 @@ async function download() {
   const response = await fetch(url);
   const buffer = await response.buffer();
   fs.writeFile(rkiFile, buffer, () => 
-    console.log('finished downloading!'));
+    convertToJson()
+    );
   }
 
 download();
 
 // Convert xlsx-file to JSON
-const result = excelToJson({
-  sourceFile: rkiFile,
-  header:{
-      rows: 1
-  }
-});
-
-// Find the right sheet which name starts with "Gesamt"
-let filteredData;
-for(let key in result){
-  if(key.match(re)){
-    filteredData = result[key];
-  }
+function convertToJson() {
+  console.log('finished downloading!');
+  result = excelToJson({
+    sourceFile: rkiFile,
+    header:{
+        rows: 1
+    }
+  })
+  createJsonObject();
 }
 
-let Germany
+// Find the right sheet which name starts with "Gesamt"
+function createJsonObject () {
+  let filteredData;
+  for(let key in result){
+    if(key.match(re)){
+      filteredData = result[key];
+    }
+  }
 
   for(let row in filteredData){
     switch (filteredData[row]['B']){
@@ -305,6 +311,7 @@ let Germany
     }
       break;
   }
+}
 }
 
 app.get('/vaccinations', (req, res) => {
