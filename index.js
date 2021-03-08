@@ -18,6 +18,7 @@ const rkiFile = `./rki-data.xlsx`;
 let result;
 const re = /Gesamt/;
 let Germany;
+let dateStatus;
 
 console.log('started');
 
@@ -48,13 +49,34 @@ function createJsonObject () {
   for(let key in result){
     if(key.match(re)){
       filteredData = result[key];
+    } else if (key === 'Erläuterung'){
+      dateStatus = result[key][1]['A'];
     }
   }
 
+Germany = {
+  dateStatus: dateStatus,
+  fedStates: {} 
+}
+
   for(let row in filteredData){
     switch (filteredData[row]['B']){
-      case 'Baden-Württemberg': 
-      Germany = { "Baden-Württemberg": {
+      case 'Gesamt': Germany.Total = {
+        'Total number of vaccine doses administered to date': filteredData[row]['C'],
+        'First vaccination Total': filteredData[row]['D'],
+        'First vaccination BioNTech': filteredData[row]['E'],
+        'First vaccination Moderna': filteredData[row]['F'],
+        'First vaccination AstraZeneca': filteredData[row]['G'],
+        'First vaccination Difference to previous day': filteredData[row]['H'],
+        'First vaccination Vaccination rate': filteredData[row]['I'],
+        'Second vaccination Total': filteredData[row]['J'],
+        'Second vaccination BioNTech': filteredData[row]['K'],
+        'Second vaccination Moderna': filteredData[row]['L'],
+        'Second vaccination Difference to previous day': filteredData[row]['M'],
+        'Second vaccination Vaccination rate': filteredData[row]['N']
+      }
+        break;
+      case 'Baden-Württemberg': Germany.fedStates.BadenWürttemberg = {
         'Total number of vaccine doses administered to date': filteredData[row]['C'],
         'First vaccination Total': filteredData[row]['D'],
         'First vaccination BioNTech': filteredData[row]['E'],
@@ -68,9 +90,8 @@ function createJsonObject () {
         'Second vaccination Difference to previous day': filteredData[row]['M'],
         'Second vaccination Vaccination rate': filteredData[row]['N']
         }
-      }
         break;
-      case 'Bayern': Germany.Bavaria = {
+      case 'Bayern': Germany.fedStates.Bavaria = {
         'Total number of vaccine doses administered to date': filteredData[row]['C'],
         'First vaccination Total': filteredData[row]['D'],
         'First vaccination BioNTech': filteredData[row]['E'],
@@ -85,7 +106,7 @@ function createJsonObject () {
         'Second vaccination Vaccination rate': filteredData[row]['N']
       }
         break;
-      case 'Berlin': Germany.Berlin = {
+      case 'Berlin': Germany.fedStates.Berlin = {
         'Total number of vaccine doses administered to date': filteredData[row]['C'],
         'First vaccination Total': filteredData[row]['D'],
         'First vaccination BioNTech': filteredData[row]['E'],
@@ -100,7 +121,7 @@ function createJsonObject () {
         'Second vaccination Vaccination rate': filteredData[row]['N']
       }
         break;
-      case 'Brandenburg': Germany.Brandenburg = {
+      case 'Brandenburg': Germany.fedStates.Brandenburg = {
         'Total number of vaccine doses administered to date': filteredData[row]['C'],
         'First vaccination Total': filteredData[row]['D'],
         'First vaccination BioNTech': filteredData[row]['E'],
@@ -115,7 +136,7 @@ function createJsonObject () {
         'Second vaccination Vaccination rate': filteredData[row]['N']
       }
         break;
-    case 'Bremen': Germany.Bremen = {
+    case 'Bremen': Germany.fedStates.Bremen = {
         'Total number of vaccine doses administered to date': filteredData[row]['C'],
         'First vaccination Total': filteredData[row]['D'],
         'First vaccination BioNTech': filteredData[row]['E'],
@@ -130,7 +151,7 @@ function createJsonObject () {
         'Second vaccination Vaccination rate': filteredData[row]['N']
       }
         break;
-     case 'Hamburg': Germany.Hamburg = {
+     case 'Hamburg': Germany.fedStates.Hamburg = {
         'Total number of vaccine doses administered to date': filteredData[row]['C'],
         'First vaccination Total': filteredData[row]['D'],
         'First vaccination BioNTech': filteredData[row]['E'],
@@ -145,7 +166,7 @@ function createJsonObject () {
         'Second vaccination Vaccination rate': filteredData[row]['N']
       }
         break; 
-    case 'Hessen': Germany.Hesse = {
+    case 'Hessen': Germany.fedStates.Hesse = {
         'Total number of vaccine doses administered to date': filteredData[row]['C'],
         'First vaccination Total': filteredData[row]['D'],
         'First vaccination BioNTech': filteredData[row]['E'],
@@ -160,7 +181,7 @@ function createJsonObject () {
         'Second vaccination Vaccination rate': filteredData[row]['N']
       }
         break;
-    case 'Mecklenburg-Vorpommern': Germany.MecklenburgVorpommern = {
+    case 'Mecklenburg-Vorpommern': Germany.fedStates.MecklenburgVorpommern = {
       'Total number of vaccine doses administered to date': filteredData[row]['C'],
       'First vaccination Total': filteredData[row]['D'],
       'First vaccination BioNTech': filteredData[row]['E'],
@@ -175,7 +196,7 @@ function createJsonObject () {
       'Second vaccination Vaccination rate': filteredData[row]['N']
     }
       break;
-    case 'Niedersachsen': Germany.LowerSaxony = {
+    case 'Niedersachsen': Germany.fedStates.LowerSaxony = {
       'Total number of vaccine doses administered to date': filteredData[row]['C'],
       'First vaccination Total': filteredData[row]['D'],
       'First vaccination BioNTech': filteredData[row]['E'],
@@ -190,7 +211,7 @@ function createJsonObject () {
       'Second vaccination Vaccination rate': filteredData[row]['N']
     }
       break;
-    case 'Nordrhein-Westfalen': Germany.NorthRhineWestphalia = {
+    case 'Nordrhein-Westfalen': Germany.fedStates.NorthRhineWestphalia = {
       'Total number of vaccine doses administered to date': filteredData[row]['C'],
       'First vaccination Total': filteredData[row]['D'],
       'First vaccination BioNTech': filteredData[row]['E'],
@@ -205,7 +226,7 @@ function createJsonObject () {
       'Second vaccination Vaccination rate': filteredData[row]['N']
     }
       break;
-    case 'Rheinland-Pfalz': Germany.RhinelandPalatinate = {
+    case 'Rheinland-Pfalz': Germany.fedStates.RhinelandPalatinate = {
       'Total number of vaccine doses administered to date': filteredData[row]['C'],
       'First vaccination Total': filteredData[row]['D'],
       'First vaccination BioNTech': filteredData[row]['E'],
@@ -220,7 +241,7 @@ function createJsonObject () {
       'Second vaccination Vaccination rate': filteredData[row]['N']
     }
       break;  
-    case 'Saarland': Germany.Saarland = {
+    case 'Saarland': Germany.fedStates.Saarland = {
       'Total number of vaccine doses administered to date': filteredData[row]['C'],
       'First vaccination Total': filteredData[row]['D'],
       'First vaccination BioNTech': filteredData[row]['E'],
@@ -235,7 +256,7 @@ function createJsonObject () {
       'Second vaccination Vaccination rate': filteredData[row]['N']
     }
       break; 
-    case 'Sachsen': Germany.Saxony = {
+    case 'Sachsen': Germany.fedStates.Saxony = {
       'Total number of vaccine doses administered to date': filteredData[row]['C'],
       'First vaccination Total': filteredData[row]['D'],
       'First vaccination BioNTech': filteredData[row]['E'],
@@ -250,7 +271,7 @@ function createJsonObject () {
       'Second vaccination Vaccination rate': filteredData[row]['N']
     }
       break;            
-    case 'Sachsen-Anhalt': Germany.SaxonyAnhalt = {
+    case 'Sachsen-Anhalt': Germany.fedStates.SaxonyAnhalt = {
       'Total number of vaccine doses administered to date': filteredData[row]['C'],
       'First vaccination Total': filteredData[row]['D'],
       'First vaccination BioNTech': filteredData[row]['E'],
@@ -265,7 +286,7 @@ function createJsonObject () {
       'Second vaccination Vaccination rate': filteredData[row]['N']
     }
       break; 
-    case 'Schleswig-Holstein': Germany.SchleswigHolstein = {
+    case 'Schleswig-Holstein': Germany.fedStates.SchleswigHolstein = {
       'Total number of vaccine doses administered to date': filteredData[row]['C'],
       'First vaccination Total': filteredData[row]['D'],
       'First vaccination BioNTech': filteredData[row]['E'],
@@ -280,7 +301,7 @@ function createJsonObject () {
       'Second vaccination Vaccination rate': filteredData[row]['N']
     }
       break; 
-    case 'Thüringen': Germany.Thuringia = {
+    case 'Thüringen': Germany.fedStates.Thuringia = {
       'Total number of vaccine doses administered to date': filteredData[row]['C'],
       'First vaccination Total': filteredData[row]['D'],
       'First vaccination BioNTech': filteredData[row]['E'],
@@ -295,21 +316,6 @@ function createJsonObject () {
       'Second vaccination Vaccination rate': filteredData[row]['N']
     }
       break; 
-    case 'Gesamt': Germany.Total = {
-      'Total number of vaccine doses administered to date': filteredData[row]['C'],
-      'First vaccination Total': filteredData[row]['D'],
-      'First vaccination BioNTech': filteredData[row]['E'],
-      'First vaccination Moderna': filteredData[row]['F'],
-      'First vaccination AstraZeneca': filteredData[row]['G'],
-      'First vaccination Difference to previous day': filteredData[row]['H'],
-      'First vaccination Vaccination rate': filteredData[row]['I'],
-      'Second vaccination Total': filteredData[row]['J'],
-      'Second vaccination BioNTech': filteredData[row]['K'],
-      'Second vaccination Moderna': filteredData[row]['L'],
-      'Second vaccination Difference to previous day': filteredData[row]['M'],
-      'Second vaccination Vaccination rate': filteredData[row]['N']
-    }
-      break;
   }
 }
 }
